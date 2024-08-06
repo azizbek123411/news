@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Colors.transparent,
           title: Text(
             "News Feed",
-            style: AppTextStyle.instance.w700.copyWith(
+            style: AppTextStyle.instance.w900.copyWith(
               fontSize: FontSizeConst.instance.largeFont,
               color: AppColors.whiteColor,
             ),
