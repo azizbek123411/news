@@ -13,6 +13,8 @@ class MainNavbar extends StatefulWidget {
 }
 
 class _MainNavbarState extends State<MainNavbar> {
+  
+
   List pages = [
     const HomePage(),
     const ExplorePage(),
@@ -52,7 +54,7 @@ class _MainNavbarState extends State<MainNavbar> {
             label: "",
           ),
           BottomNavigationBarItem(
-            icon: Icon(IconlyBold.chart),
+            icon: Icon(IconlyBold.bookmark),
             label: "",
           ),
         ],

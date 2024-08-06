@@ -4,7 +4,6 @@ import 'package:news_app/config/app_padding.dart';
 import 'package:news_app/config/appcolors.dart';
 import 'package:news_app/config/font_size.dart';
 import 'package:news_app/config/screen_utils.dart';
-import 'package:news_app/config/space.dart';
 import 'package:news_app/config/text_styles.dart';
 
 class HomeNewsCard extends StatefulWidget {
@@ -67,7 +66,7 @@ class _HomeNewsCardState extends State<HomeNewsCard> {
                           color: AppColors.whiteColor,
                         ),
                         Text(
-                          '2 hours ago',
+                          ' 2 hours ago',
                           style: TextStyle(
                             color: AppColors.whiteGrey,
                           ),
