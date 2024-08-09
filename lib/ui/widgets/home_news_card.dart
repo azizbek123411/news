@@ -7,7 +7,18 @@ import 'package:news_app/config/screen_utils.dart';
 import 'package:news_app/config/text_styles.dart';
 
 class HomeNewsCard extends StatefulWidget {
-  const HomeNewsCard({super.key});
+  String imageUrl;
+  DateTime datetime;
+  String type;
+  String title;
+
+  HomeNewsCard({
+    super.key,
+    required this.title,
+    required this.datetime,
+    required this.imageUrl,
+    required this.type,
+  });
 
   @override
   State<HomeNewsCard> createState() => _HomeNewsCardState();
@@ -36,9 +47,7 @@ class _HomeNewsCardState extends State<HomeNewsCard> {
             ),
             child: Image(
               height: 200.h,
-              image: const AssetImage(
-                'assets/images/cnn.png',
-              ),
+              image: NetworkImage(widget.imageUrl),
               fit: BoxFit.fitHeight,
             ),
           ),
@@ -66,7 +75,7 @@ class _HomeNewsCardState extends State<HomeNewsCard> {
                           color: AppColors.whiteColor,
                         ),
                         Text(
-                          ' 2 hours ago',
+                          widget.datetime.toString(),
                           style: TextStyle(
                             color: AppColors.whiteGrey,
                           ),
@@ -74,7 +83,7 @@ class _HomeNewsCardState extends State<HomeNewsCard> {
                       ],
                     ),
                     IconButton(
-                      onPressed: (){},
+                      onPressed: () {},
                       icon: const Icon(Icons.bookmark),
                       color: AppColors.whiteColor,
                     )
@@ -82,7 +91,7 @@ class _HomeNewsCardState extends State<HomeNewsCard> {
                 ),
                 // HBox(10.h),
                 Text(
-                  'Social',
+                  widget.type,
                   style: AppTextStyle.instance.w600.copyWith(
                     fontSize: FontSizeConst.instance.smallFont,
                     color: AppColors.whiteGrey,
@@ -90,7 +99,7 @@ class _HomeNewsCardState extends State<HomeNewsCard> {
                 ),
                 // HBox(10.h),
                 Text(
-                  'Google loses massive antitrust lawsuit over its search dominance',
+                  widget.title,
                   style: AppTextStyle.instance.w600.copyWith(
                     fontSize: FontSizeConst.instance.mediumFont,
                     color: AppColors.whiteColor,

@@ -21,16 +21,17 @@ class NewsModel {
     required this.urlImage,
   });
 
-  factory NewsModel.fromJson(Map<String, dynamic> json){
+  factory NewsModel.fromJson(Map<String, dynamic> json) {
     return NewsModel(
-      content: json["content"],
-      title: json["title"],
-      name: json['source']["name"],
-      id: json['source']["id"],
-      description: json["description"],
-      url: json["url"],
-      author: json["author"],
-      publishedAt: DateTime.parse(json["publishedAt"]),
-      urlImage:json['urlToImage'],);
+      content: json['articles']["content"],
+      title: json['articles']["title"],
+      name: json['articles']['source']["name"],
+      id: json['articles']['source']["id"],
+      description: json['articles']["description"],
+      url: json['articles']["url"],
+      author: json['articles']["author"],
+      publishedAt: DateTime.parse(json['articles']["publishedAt"]),
+      urlImage: json['articles']['urlToImage'],
+    );
   }
 }
