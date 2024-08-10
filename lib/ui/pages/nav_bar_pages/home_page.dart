@@ -74,10 +74,10 @@ class _HomePageState extends ConsumerState<HomePage> {
                             itemCount: 5,
                             itemBuilder: (context, index) {
                               return HomeNewsCard(
-                                title: data[index]!.title,
-                                datetime: data[index]!.publishedAt,
-                                imageUrl: data[index]!.urlImage,
-                                type: data[index]!.author,
+                                title: data!.title.toString(),
+                                datetime: data.publishedAt.toString(),
+                                imageUrl: data.urlImage??"",
+                                type: data.author.toString(),
                               );
                             }),
                       ),

@@ -9,20 +9,13 @@ class ApiService {
     'https://newsapi.org/v2/top-headlines?country=us&apiKey=d9f35a744d684e14b251181fcf21c42d',
   );
 
-  static Future<List<NewsModel?>>getNews() async {
-    List<NewsModel> news = [];
+  static Future<NewsModel?> getNews() async {
+    // List<NewsModel> news = [];
     final response = await get(uri);
     log(response.body);
     if (response.statusCode == 200) {
       final newsList = jsonDecode(response.body);
-      for (final item in newsList) {
-        try {
-          news.add(NewsModel.fromJson(item));
-        } catch (e, st) {
-          log("Error", error: e, stackTrace: st);
-        }
-      }
+      return NewsModel.fromJson(newsList);
     }
-    return news;
   }
 }
