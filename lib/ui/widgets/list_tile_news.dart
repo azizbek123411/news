@@ -35,7 +35,7 @@ class ListTileNews extends StatelessWidget {
           child:Image(image: NetworkImage(imageUrl,),),
         ),
         title: Text(
-          category!,
+          category??"",
           style: AppTextStyle.instance.w600.copyWith(
             fontSize: FontSizeConst.instance.smallFont,
             color: AppColors.whiteGrey,

@@ -21,6 +21,9 @@ class HomePage extends StatefulHookConsumerWidget {
 class _HomePageState extends ConsumerState<HomePage> {
   List items = [];
   List generalList = [];
+  List businessList = [];
+  List sportsList = [];
+  List techList = [];
 
   Future<void> getNews() async {
     final response = await ApiService.getNews();
@@ -63,12 +66,75 @@ class _HomePageState extends ConsumerState<HomePage> {
       );
     }
   }
+  Future<void> getBusiness()async{
+    final response=await ApiService.getBusiness();
+    if(response!=null){
+      setState(() {
+        businessList=response;
+      });
+    }else{
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.red,
+          content: Text(
+            'Error Occured',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+        ),
+      );
+    }
+  }
+  Future<void> getSports()async {
+    final response=await ApiService.getBySports();
+    if(response!=null){
+      setState(() {
+        sportsList=response;
+      });
+    }else{
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.red,
+          content: Text(
+            'Error Occured',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+        ),
+      );
+    }
+  }
+  Future<void> getTech()async{
+    final response=await ApiService.getByTech();
+    if(response!=null){
+      setState(() {
+        techList=response;
+      });
+    }else{
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.red,
+          content: Text(
+            'Error Occured',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+        ),
+      );
+    }
+  }
 
   @override
   void initState() {
     super.initState();
     getNews();
     getGeneral();
+    getBusiness();
+    getSports();
+    getTech();
   }
 
   @override
@@ -100,7 +166,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                     'Popular now',
                     style: AppTextStyle.instance.w700.copyWith(
                         fontSize: FontSizeConst.instance.largeFont,
-                        color: AppColors.whiteColor),
+                        color: AppColors.whiteColor,),
                   ),
                   TextButton(
                     onPressed: () {},
@@ -185,9 +251,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                           );
                         }),
                     ListView.builder(
-                        itemCount: generalList.length,
+                        itemCount: businessList.length,
                         itemBuilder: (context, index) {
-                          final categories = generalList[index];
+                          final categories = businessList[index];
                           return ListTileNews(
                             imageUrl: categories['urlToImage'] ??
                                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQY0m-GvsveJ0QM1RacSZkMH5E-DuhMZYu_kA&s",
@@ -195,9 +261,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                           );
                         }),
                     ListView.builder(
-                        itemCount: generalList.length,
+                        itemCount: sportsList.length,
                         itemBuilder: (context, index) {
-                          final categories = generalList[index];
+                          final categories = sportsList[index];
                           return ListTileNews(
                             imageUrl: categories['urlToImage'] ??
                                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQY0m-GvsveJ0QM1RacSZkMH5E-DuhMZYu_kA&s",
@@ -205,9 +271,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                           );
                         }),
                     ListView.builder(
-                        itemCount: generalList.length,
+                        itemCount: techList.length,
                         itemBuilder: (context, index) {
-                          final categories = generalList[index];
+                          final categories = techList[index];
                           return ListTileNews(
                             imageUrl: categories['urlToImage'] ??
                                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQY0m-GvsveJ0QM1RacSZkMH5E-DuhMZYu_kA&s",
