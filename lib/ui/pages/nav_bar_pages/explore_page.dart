@@ -24,7 +24,10 @@ class _ExplorePageState extends State<ExplorePage> {
           actions: [
             IconButton(
               onPressed: () {
-                showDatePicker(context: context, firstDate: DateTime(2023), lastDate: DateTime.now());
+                showDatePicker(
+                    context: context,
+                    firstDate: DateTime(2023),
+                    lastDate: DateTime.now());
               },
               icon: Icon(
                 IconlyBold.calendar,
@@ -73,19 +76,35 @@ class _ExplorePageState extends State<ExplorePage> {
           children: [
             ListView.builder(
               itemCount: 10,
-              itemBuilder: (context, index) => ListTileNews(),
+              itemBuilder: (context, index) => ListTileNews(
+                category: 'dd',
+                imageUrl: 'assets/images/cnn.png',
+                title: 'qq',
+              ),
             ),
             ListView.builder(
               itemCount: 10,
-              itemBuilder: (context, index) => ListTileNews(),
+              itemBuilder: (context, index) => ListTileNews(
+                category: '',
+                imageUrl: 'assets/images/cnn.png',
+                title: '',
+              ),
             ),
             ListView.builder(
               itemCount: 10,
-              itemBuilder: (context, index) => ListTileNews(),
+              itemBuilder: (context, index) => ListTileNews(
+                category: '',
+                imageUrl: 'assets/images/cnn.png',
+                title: '',
+              ),
             ),
             ListView.builder(
               itemCount: 10,
-              itemBuilder: (context, index) => ListTileNews(),
+              itemBuilder: (context, index) => ListTileNews(
+                category: '',
+                imageUrl: 'assets/images/cnn.png',
+                title: '',
+              ),
             ),
           ],
         ),

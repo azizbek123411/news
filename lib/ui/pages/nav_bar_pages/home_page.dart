@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:news_app/config/app_padding.dart';
@@ -22,7 +20,7 @@ class HomePage extends StatefulHookConsumerWidget {
 
 class _HomePageState extends ConsumerState<HomePage> {
   List items = [];
-  bool isLoading = true;
+  List generalList = [];
 
   Future<void> getNews() async {
     final response = await ApiService.getNews();
@@ -43,15 +41,34 @@ class _HomePageState extends ConsumerState<HomePage> {
         ),
       );
     }
-    setState(() {
-      isLoading = true;
-    });
+  }
+
+  Future<void> getGeneral() async {
+    final response = await ApiService.getByGeneral();
+    if (response != null) {
+      setState(() {
+        generalList = response;
+      });
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.red,
+          content: Text(
+            'Error Occured',
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+        ),
+      );
+    }
   }
 
   @override
   void initState() {
     super.initState();
     getNews();
+    getGeneral();
   }
 
   @override
@@ -70,118 +87,138 @@ class _HomePageState extends ConsumerState<HomePage> {
             ),
           ),
         ),
-        body: Visibility(
-          visible: isLoading,
-          replacement: Center(
-            child: CircularProgressIndicator(),
-          ),
-          child: Padding(
-            padding: Dis.only(lr: 10.w, tb: 10.h),
-            child: SingleChildScrollView(
-                child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Popular now',
+        body: Padding(
+          padding: Dis.only(lr: 10.w, tb: 10.h),
+          child: SingleChildScrollView(
+              child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Popular now',
+                    style: AppTextStyle.instance.w700.copyWith(
+                        fontSize: FontSizeConst.instance.largeFont,
+                        color: AppColors.whiteColor),
+                  ),
+                  TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      'See all',
                       style: AppTextStyle.instance.w700.copyWith(
                           fontSize: FontSizeConst.instance.largeFont,
-                          color: AppColors.whiteColor),
+                          color: AppColors.whiteGrey),
                     ),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        'See all',
-                        style: AppTextStyle.instance.w700.copyWith(
-                            fontSize: FontSizeConst.instance.largeFont,
-                            color: AppColors.whiteGrey),
-                      ),
+                  ),
+                ],
+              ),
+              HBox(10.h),
+              SizedBox(
+                height: 302.h,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: items.length,
+                    itemBuilder: (context, index) {
+                      final item = items[index] as Map;
+                      return HomeNewsCard(
+                        title: item['title'] ?? "",
+                        datetime: item['publishedAt'].toString() ?? "",
+                        type: item['author'] ?? "",
+                        imageUrl: item['urlToImage'] ??
+                            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQY0m-GvsveJ0QM1RacSZkMH5E-DuhMZYu_kA&s',
+                      );
+                    }),
+              ),
+              HBox(20.h),
+              Text(
+                'Category News',
+                style: AppTextStyle.instance.w700.copyWith(
+                  fontSize: FontSizeConst.instance.largeFont,
+                  color: AppColors.whiteColor,
+                ),
+              ),
+              HBox(15.h),
+              TabBar(
+                  unselectedLabelStyle: AppTextStyle.instance.w700.copyWith(
+                    color: AppColors.whiteGrey,
+                  ),
+                  labelStyle: AppTextStyle.instance.w900
+                      .copyWith(color: AppColors.whiteColor),
+                  tabAlignment: TabAlignment.center,
+                  indicatorSize: TabBarIndicatorSize.tab,
+                  indicator: BoxDecoration(
+                    borderRadius: BorderRadius.circular(
+                      50,
                     ),
+                    color: AppColors.navBar,
+                  ),
+                  isScrollable: false,
+                  dividerColor: Colors.transparent,
+                  tabs: const [
+                    Tab(
+                      text: "General",
+                    ),
+                    Tab(
+                      text: "Business",
+                    ),
+                    Tab(
+                      text: "Sports",
+                    ),
+                    Tab(
+                      text: "Technology",
+                    ),
+                  ]),
+              HBox(15.h),
+              SizedBox(
+                height: 450.h,
+                child: TabBarView(
+                  children: [
+                    ListView.builder(
+                        itemCount: generalList.length,
+                        itemBuilder: (context, index) {
+                          final categories = generalList[index];
+                          return ListTileNews(
+                            imageUrl: categories['urlToImage'] ??
+                                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQY0m-GvsveJ0QM1RacSZkMH5E-DuhMZYu_kA&s",
+                            title: categories['title'] ?? "Unknown Title",
+                          );
+                        }),
+                    ListView.builder(
+                        itemCount: generalList.length,
+                        itemBuilder: (context, index) {
+                          final categories = generalList[index];
+                          return ListTileNews(
+                            imageUrl: categories['urlToImage'] ??
+                                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQY0m-GvsveJ0QM1RacSZkMH5E-DuhMZYu_kA&s",
+                            title: categories['title'] ?? "Unknown Title",
+                          );
+                        }),
+                    ListView.builder(
+                        itemCount: generalList.length,
+                        itemBuilder: (context, index) {
+                          final categories = generalList[index];
+                          return ListTileNews(
+                            imageUrl: categories['urlToImage'] ??
+                                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQY0m-GvsveJ0QM1RacSZkMH5E-DuhMZYu_kA&s",
+                            title: categories['title'] ?? "Unknown Title",
+                          );
+                        }),
+                    ListView.builder(
+                        itemCount: generalList.length,
+                        itemBuilder: (context, index) {
+                          final categories = generalList[index];
+                          return ListTileNews(
+                            imageUrl: categories['urlToImage'] ??
+                                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQY0m-GvsveJ0QM1RacSZkMH5E-DuhMZYu_kA&s",
+                            title: categories['title'] ?? "Unknown Title",
+                          );
+                        }),
                   ],
                 ),
-                HBox(10.h),
-                SizedBox(
-                  height: 302.h,
-                  child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 5,
-                      itemBuilder: (context, index) {
-                        final item =items[index] as Map;
-                        return HomeNewsCard(
-                          title: item['title']??"",
-                          datetime: item['publishedAt'].toString()??"",
-                          type: item['author']??"",
-                          imageUrl: item['urlToImage']??'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQY0m-GvsveJ0QM1RacSZkMH5E-DuhMZYu_kA&s',
-                        );
-                      }),
-                ),
-                HBox(20.h),
-                Text(
-                  'Category News',
-                  style: AppTextStyle.instance.w700.copyWith(
-                      fontSize: FontSizeConst.instance.largeFont,
-                      color: AppColors.whiteColor),
-                ),
-                HBox(15.h),
-                TabBar(
-                    unselectedLabelStyle: AppTextStyle.instance.w700.copyWith(
-                      color: AppColors.whiteGrey,
-                    ),
-                    labelStyle: AppTextStyle.instance.w900
-                        .copyWith(color: AppColors.whiteColor),
-                    tabAlignment: TabAlignment.center,
-                    indicatorSize: TabBarIndicatorSize.tab,
-                    indicator: BoxDecoration(
-                      borderRadius: BorderRadius.circular(
-                        50,
-                      ),
-                      color: AppColors.navBar,
-                    ),
-                    isScrollable: false,
-                    dividerColor: Colors.transparent,
-                    tabs: const [
-                      Tab(
-                        text: "All",
-                      ),
-                      Tab(
-                        text: "Technology",
-                      ),
-                      Tab(
-                        text: "Sport",
-                      ),
-                      Tab(
-                        text: "Social",
-                      ),
-                    ]),
-                HBox(15.h),
-                SizedBox(
-                  height: 450.h,
-                  child: TabBarView(
-                    children: [
-                      ListView.builder(
-                        itemCount: 4,
-                        itemBuilder: (context, index) => const ListTileNews(),
-                      ),
-                      ListView.builder(
-                        itemCount: 4,
-                        itemBuilder: (context, index) => const ListTileNews(),
-                      ),
-                      ListView.builder(
-                        itemCount: 4,
-                        itemBuilder: (context, index) => const ListTileNews(),
-                      ),
-                      ListView.builder(
-                        itemCount: 4,
-                        itemBuilder: (context, index) => const ListTileNews(),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            )),
-          ),
+              ),
+            ],
+          )),
         ),
       ),
     );

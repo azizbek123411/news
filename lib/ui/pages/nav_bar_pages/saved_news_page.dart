@@ -15,19 +15,24 @@ class _SavedNewsPageState extends State<SavedNewsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          title: Text(
-            "Saved news",
-            style: AppTextStyle.instance.w700.copyWith(
-                fontSize: FontSizeConst.instance.largeFont,
-                color: AppColors.whiteColor),
-          ),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        title: Text(
+          "Saved news",
+          style: AppTextStyle.instance.w700.copyWith(
+              fontSize: FontSizeConst.instance.largeFont,
+              color: AppColors.whiteColor),
         ),
-        backgroundColor: AppColors.mainBackGround,
-        body: ListView.builder(
-          itemCount: 10,
-          itemBuilder: (context, index) => ListTileNews(),
-        ));
+      ),
+      backgroundColor: AppColors.mainBackGround,
+      body: ListView.builder(
+        itemCount: 10,
+        itemBuilder: (context, index) => ListTileNews(
+          category: '',
+          imageUrl: 'assets/images/cnn.png',
+          title: '',
+        ),
+      ),
+    );
   }
 }

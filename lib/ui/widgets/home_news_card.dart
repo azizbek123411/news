@@ -24,10 +24,10 @@ class HomeNewsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: Dis.only(lr: 10.w),
-      height: 300.h,
+      height: 320.h,
       width: 270.w,
       decoration: BoxDecoration(
-        color: Colors.white,
+        // color: Colors.white,
         borderRadius: BorderRadius.circular(20),
       ),
       child: Stack(
@@ -52,7 +52,7 @@ class HomeNewsCard extends StatelessWidget {
           ),
           Container(
             margin: Dis.only(top: 160.h),
-            height: 147.h,
+            height: 167.h,
             padding: Dis.only(lr: 8.w, tb: 10.h),
             decoration: BoxDecoration(
               color: AppColors.navBar,
