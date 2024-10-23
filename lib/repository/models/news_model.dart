@@ -23,15 +23,15 @@ class NewsModel {
 
   factory NewsModel.fromJson(Map<String, dynamic> json) {
     return NewsModel(
-      content: json['articles']["content"],
-      title: json['articles']["title"],
-      name: json['articles']['source']["name"],
-      id: json['articles']['source']["id"],
-      description: json['articles']["description"],
-      url: json['articles']["url"],
-      author: json['articles']["author"],
-      publishedAt: json['articles']['publishedAt'],
-      urlImage: json['articles']['urlToImage'],
+      content: json["content"],
+      title: json["title"],
+      name: json['source']["name"],
+      id: json['source']["id"],
+      description: json["description"],
+      url: json["url"],
+      author: json["author"],
+      publishedAt: json['publishedAt'],
+      urlImage: json['urlToImage'],
     );
   }
 }

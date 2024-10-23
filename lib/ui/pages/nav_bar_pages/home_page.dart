@@ -6,6 +6,7 @@ import 'package:news_app/config/font_size.dart';
 import 'package:news_app/config/screen_utils.dart';
 import 'package:news_app/config/space.dart';
 import 'package:news_app/config/text_styles.dart';
+import 'package:news_app/repository/models/news_model.dart';
 import 'package:news_app/repository/service/api_service.dart';
 import 'package:news_app/ui/widgets/home_news_card.dart';
 
@@ -19,113 +20,43 @@ class HomePage extends StatefulHookConsumerWidget {
 }
 
 class _HomePageState extends ConsumerState<HomePage> {
-  List items = [];
-  List generalList = [];
-  List businessList = [];
-  List sportsList = [];
-  List techList = [];
+  List<NewsModel> items = [];
+  List<NewsModel> generalList = [];
+  List<NewsModel> businessList = [];
+  List<NewsModel> sportsList = [];
+  List<NewsModel> techList = [];
 
   Future<void> getNews() async {
     final response = await ApiService.getNews();
-    if (response != null) {
-      setState(() {
-        items = response;
-      });
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          backgroundColor: Colors.red,
-          content: Text(
-            'Error Occured',
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-        ),
-      );
+    setState(() {
+      items = response;
+    });
     }
-  }
 
   Future<void> getGeneral() async {
     final response = await ApiService.getByGeneral();
-    if (response != null) {
-      setState(() {
-        generalList = response;
-      });
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          backgroundColor: Colors.red,
-          content: Text(
-            'Error Occured',
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-        ),
-      );
+    setState(() {
+      generalList = response;
+    });
     }
-  }
   Future<void> getBusiness()async{
     final response=await ApiService.getBusiness();
-    if(response!=null){
-      setState(() {
-        businessList=response;
-      });
-    }else{
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          backgroundColor: Colors.red,
-          content: Text(
-            'Error Occured',
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-        ),
-      );
+    setState(() {
+      businessList=response;
+    });
     }
-  }
   Future<void> getSports()async {
     final response=await ApiService.getBySports();
-    if(response!=null){
-      setState(() {
-        sportsList=response;
-      });
-    }else{
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          backgroundColor: Colors.red,
-          content: Text(
-            'Error Occured',
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-        ),
-      );
+    setState(() {
+      sportsList=response;
+    });
     }
-  }
   Future<void> getTech()async{
     final response=await ApiService.getByTech();
-    if(response!=null){
-      setState(() {
-        techList=response;
-      });
-    }else{
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          backgroundColor: Colors.red,
-          content: Text(
-            'Error Occured',
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-        ),
-      );
+    setState(() {
+      techList=response;
+    });
     }
-  }
 
   @override
   void initState() {
@@ -186,12 +117,12 @@ class _HomePageState extends ConsumerState<HomePage> {
                     scrollDirection: Axis.horizontal,
                     itemCount: items.length,
                     itemBuilder: (context, index) {
-                      final item = items[index] as Map;
+                      final item = items[index];
                       return HomeNewsCard(
-                        title: item['title'] ?? "",
-                        datetime: item['publishedAt'].toString() ?? "",
-                        type: item['author'] ?? "",
-                        imageUrl: item['urlToImage'] ??
+                        title: item.title ?? "",
+                        datetime: item.publishedAt.toString(),
+                        type: item.author?? "",
+                        imageUrl: item.urlImage ??
                             'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQY0m-GvsveJ0QM1RacSZkMH5E-DuhMZYu_kA&s',
                       );
                     }),
@@ -245,9 +176,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                         itemBuilder: (context, index) {
                           final categories = generalList[index];
                           return ListTileNews(
-                            imageUrl: categories['urlToImage'] ??
+                            imageUrl: categories.urlImage ??
                                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQY0m-GvsveJ0QM1RacSZkMH5E-DuhMZYu_kA&s",
-                            title: categories['title'] ?? "Unknown Title",
+                            title: categories.title ?? "Unknown Title",
                           );
                         }),
                     ListView.builder(
@@ -255,9 +186,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                         itemBuilder: (context, index) {
                           final categories = businessList[index];
                           return ListTileNews(
-                            imageUrl: categories['urlToImage'] ??
+                            imageUrl: categories.urlImage ??
                                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQY0m-GvsveJ0QM1RacSZkMH5E-DuhMZYu_kA&s",
-                            title: categories['title'] ?? "Unknown Title",
+                            title: categories.title ?? "Unknown Title",
                           );
                         }),
                     ListView.builder(
@@ -265,9 +196,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                         itemBuilder: (context, index) {
                           final categories = sportsList[index];
                           return ListTileNews(
-                            imageUrl: categories['urlToImage'] ??
+                            imageUrl: categories.urlImage ??
                                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQY0m-GvsveJ0QM1RacSZkMH5E-DuhMZYu_kA&s",
-                            title: categories['title'] ?? "Unknown Title",
+                            title: categories.title ?? "Unknown Title",
                           );
                         }),
                     ListView.builder(
@@ -275,9 +206,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                         itemBuilder: (context, index) {
                           final categories = techList[index];
                           return ListTileNews(
-                            imageUrl: categories['urlToImage'] ??
+                            imageUrl: categories.urlImage ??
                                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQY0m-GvsveJ0QM1RacSZkMH5E-DuhMZYu_kA&s",
-                            title: categories['title'] ?? "Unknown Title",
+                            title: categories.title ?? "Unknown Title",
                           );
                         }),
                   ],
