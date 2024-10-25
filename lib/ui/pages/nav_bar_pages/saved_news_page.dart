@@ -27,11 +27,7 @@ class _SavedNewsPageState extends State<SavedNewsPage> {
       backgroundColor: AppColors.mainBackGround,
       body: ListView.builder(
         itemCount: 10,
-        itemBuilder: (context, index) => ListTileNews(
-          category: '',
-          imageUrl: 'assets/images/cnn.png',
-          title: '',
-        ),
+        itemBuilder: (context, index) => Text('hello',style: TextStyle(color: Colors.white),)
       ),
     );
   }

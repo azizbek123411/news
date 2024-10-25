@@ -119,6 +119,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                     itemBuilder: (context, index) {
                       final item = items[index];
                       return HomeNewsCard(
+                        model: item,
                         title: item.title ?? "",
                         datetime: item.publishedAt.toString(),
                         type: item.author?? "",
@@ -178,7 +179,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                           return ListTileNews(
                             imageUrl: categories.urlImage ??
                                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQY0m-GvsveJ0QM1RacSZkMH5E-DuhMZYu_kA&s",
-                            title: categories.title ?? "Unknown Title",
+                            title: categories.title ?? "Unknown Title", model: categories,
                           );
                         }),
                     ListView.builder(
@@ -186,6 +187,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                         itemBuilder: (context, index) {
                           final categories = businessList[index];
                           return ListTileNews(
+                            model: categories,
                             imageUrl: categories.urlImage ??
                                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQY0m-GvsveJ0QM1RacSZkMH5E-DuhMZYu_kA&s",
                             title: categories.title ?? "Unknown Title",
@@ -196,6 +198,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                         itemBuilder: (context, index) {
                           final categories = sportsList[index];
                           return ListTileNews(
+                            model: categories,
                             imageUrl: categories.urlImage ??
                                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQY0m-GvsveJ0QM1RacSZkMH5E-DuhMZYu_kA&s",
                             title: categories.title ?? "Unknown Title",
@@ -206,6 +209,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                         itemBuilder: (context, index) {
                           final categories = techList[index];
                           return ListTileNews(
+                            model: categories,
                             imageUrl: categories.urlImage ??
                                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQY0m-GvsveJ0QM1RacSZkMH5E-DuhMZYu_kA&s",
                             title: categories.title ?? "Unknown Title",
@@ -215,7 +219,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                 ),
               ),
             ],
-          )),
+          ),),
         ),
       ),
     );
