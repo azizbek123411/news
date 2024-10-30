@@ -14,10 +14,12 @@ class HomeNewsCard extends StatelessWidget {
   String datetime;
   String type;
   String title;
+
   NewsModel model;
 
   HomeNewsCard(
       {super.key,
+
       required this.title,
       required this.datetime,
       required this.imageUrl,
@@ -86,7 +88,8 @@ class HomeNewsCard extends StatelessWidget {
                       Row(
                         children: [
                           Icon(
-                            IconlyBold.time_circle,
+
+                           IconlyBold.time_circle,
                             color: AppColors.whiteColor,
                           ),
                           Text(

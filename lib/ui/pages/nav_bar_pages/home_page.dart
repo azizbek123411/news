@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:news_app/config/app_padding.dart';
 import 'package:news_app/config/appcolors.dart';
 import 'package:news_app/config/font_size.dart';
@@ -11,20 +10,27 @@ import 'package:news_app/repository/service/api_service.dart';
 import 'package:news_app/ui/widgets/home_news_card.dart';
 
 import '../../widgets/list_tile_news.dart';
+import 'package:provider/provider.dart';
 
-class HomePage extends StatefulHookConsumerWidget {
+
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
-  ConsumerState<HomePage> createState() => _HomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends ConsumerState<HomePage> {
+class _HomePageState extends State<HomePage> {
   List<NewsModel> items = [];
   List<NewsModel> generalList = [];
   List<NewsModel> businessList = [];
   List<NewsModel> sportsList = [];
   List<NewsModel> techList = [];
+
+
+  void addToCart( NewsModel news){
+Provider.of<NewsSaved>(context,listen:false).save_a_news(news);
+  }
 
   Future<void> getNews() async {
     final response = await ApiService.getNews();
@@ -177,6 +183,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                         itemBuilder: (context, index) {
                           final categories = generalList[index];
                           return ListTileNews(
+                            onTap: () =>addToCart,
+
                             imageUrl: categories.urlImage ??
                                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQY0m-GvsveJ0QM1RacSZkMH5E-DuhMZYu_kA&s",
                             title: categories.title ?? "Unknown Title", model: categories,
@@ -187,6 +195,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                         itemBuilder: (context, index) {
                           final categories = businessList[index];
                           return ListTileNews(
+                            onTap: () =>addToCart,
+
                             model: categories,
                             imageUrl: categories.urlImage ??
                                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQY0m-GvsveJ0QM1RacSZkMH5E-DuhMZYu_kA&s",
@@ -198,6 +208,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                         itemBuilder: (context, index) {
                           final categories = sportsList[index];
                           return ListTileNews(
+                            onTap: () =>addToCart,
+
                             model: categories,
                             imageUrl: categories.urlImage ??
                                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQY0m-GvsveJ0QM1RacSZkMH5E-DuhMZYu_kA&s",
@@ -209,6 +221,8 @@ class _HomePageState extends ConsumerState<HomePage> {
                         itemBuilder: (context, index) {
                           final categories = techList[index];
                           return ListTileNews(
+                            onTap: () =>addToCart,
+
                             model: categories,
                             imageUrl: categories.urlImage ??
                                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQY0m-GvsveJ0QM1RacSZkMH5E-DuhMZYu_kA&s",

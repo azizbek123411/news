@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:news_app/repository/models/news_model.dart';
 
@@ -80,5 +81,21 @@ class ApiService {
       return NewsModel.fromJson(e);
     }).toList();
     return users;
+  }
+}
+
+class NewsSaved extends ChangeNotifier {
+  List<NewsModel> savedNews = [];
+
+  List<NewsModel> get saved => savedNews;
+
+  void save_a_news(NewsModel news) {
+    savedNews.add(news);
+    notifyListeners();
+  }
+
+  void removeNews(NewsModel news){
+    savedNews.remove(news);
+    notifyListeners();
   }
 }

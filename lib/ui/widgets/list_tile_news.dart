@@ -8,19 +8,26 @@ import '../../config/font_size.dart';
 import '../../config/text_styles.dart';
 import '../../repository/models/news_model.dart';
 
-class ListTileNews extends StatelessWidget {
+class ListTileNews extends StatefulWidget {
   String? category;
   String imageUrl;
   String title;
   NewsModel model;
+  void Function() onTap;
 
   ListTileNews(
       {super.key,
       this.category,
+        required this.onTap,
       required this.imageUrl,
       required this.title,
       required this.model});
 
+  @override
+  State<ListTileNews> createState() => _ListTileNewsState();
+}
+
+class _ListTileNewsState extends State<ListTileNews> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -28,7 +35,7 @@ class ListTileNews extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => FullNewsPage(newsModel: model),
+            builder: (context) => FullNewsPage(newsModel: widget.model),
           ),
         );
       },
@@ -48,19 +55,19 @@ class ListTileNews extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             child: Image(
               image: NetworkImage(
-                imageUrl,
+                widget.imageUrl,
               ),
             ),
           ),
           title: Text(
-            category ?? "",
+            widget.category ?? "",
             style: AppTextStyle.instance.w600.copyWith(
               fontSize: FontSizeConst.instance.smallFont,
               color: AppColors.whiteGrey,
             ),
           ),
           subtitle: Text(
-            title,
+            widget.title,
             style: AppTextStyle.instance.w600.copyWith(
               fontSize: FontSizeConst.instance.mediumFont,
               color: AppColors.whiteColor,
@@ -69,7 +76,7 @@ class ListTileNews extends StatelessWidget {
             maxLines: 2,
           ),
           trailing: IconButton(
-            onPressed: () {},
+            onPressed: widget.onTap,
             icon: const Icon(Icons.bookmark),
             color: AppColors.whiteColor,
           ),
